@@ -5,6 +5,7 @@ A little script for DCS that will show the score for Red and Blue team at the bo
 <img src=doc/Ad.jpg>
 
 ## installation
+Download zip & extract zip file. Simply click on code->download zip
 add the score_timer.lua into the mission start trigger after you initialized a "BlueScore" and a "RedScore" flag.
 <img src=doc/MissionEditor.jpg>
 
