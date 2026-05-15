@@ -3,7 +3,7 @@
 import os
 from PIL import Image,ImageFont,ImageDraw
 
-size = 260, 24
+size = 296, 24
 
 def base():
   # this function just generates a reference
@@ -14,20 +14,22 @@ def base():
   font=ImageFont.truetype("cour.ttf", 32)
   y=-6
   dx=18
-  draw.text((1+ 0*dx,y),'0',(64,192,255),font)
+  draw.text((1+ 0*dx,y),'+',(64,192,255),font)
   draw.text((1+ 1*dx,y),'0',(64,192,255),font)
   draw.text((1+ 2*dx,y),'0',(64,192,255),font)
-  draw.text((1+ 3*dx,y),':',(192,192,0),font)
-  draw.text((1+ 4*dx,y),'0',(255,0,0),font)
-  draw.text((1+ 5*dx,y),'0',(255,0,0),font)
+  draw.text((1+ 3*dx,y),'0',(64,192,255),font)
+  draw.text((1+ 4*dx,y),':',(192,192,0),font)
+  draw.text((1+ 5*dx,y),'+',(255,0,0),font)
   draw.text((1+ 6*dx,y),'0',(255,0,0),font)
-  draw.text((1+ 7*dx,y),'/',(192,192,0),font)
-  draw.text((1+ 8*dx,y),'0',(0,255,0),font)
-  draw.text((1+ 9*dx,y),'0',(0,255,0),font)
+  draw.text((1+ 7*dx,y),'0',(255,0,0),font)
+  draw.text((1+ 8*dx,y),'0',(255,0,0),font)
+  draw.text((1+ 9*dx,y),'/',(192,192,0),font)
   draw.text((1+10*dx,y),'0',(0,255,0),font)
-  draw.text((1+11*dx,y),':',(0,255,0),font)
+  draw.text((1+11*dx,y),'0',(0,255,0),font)
   draw.text((1+12*dx,y),'0',(0,255,0),font)
-  draw.text((1+13*dx,y),'0',(0,255,0),font)
+  draw.text((1+13*dx,y),':',(0,255,0),font)
+  draw.text((1+14*dx,y),'0',(0,255,0),font)
+  draw.text((1+15*dx,y),'0',(0,255,0),font)
   img.save('base.png')
 
 def empty():
@@ -39,10 +41,10 @@ def empty():
   font=ImageFont.truetype("cour.ttf", 32)
   y=-6
   dx=18
-  # here 3, 7, 11 are the locations of from above
-  draw.text((1+ 3*dx,y),':',(192,192,0),font)
-  draw.text((1+ 7*dx,y),'/',(192,192,0),font)
-  draw.text((1+ 11*dx,y),':',(0,255,0),font)
+  # here 4, 8, 12 are the locations of from above
+  draw.text((1+ 4*dx,y),':',(192,192,0),font)
+  draw.text((1+ 9*dx,y),'/',(192,192,0),font)
+  draw.text((1+ 13*dx,y),':',(0,255,0),font)
   img.save('score_timer'+os.sep+'empty.png')
 
 def number(loc=0,num=0,color=(0,0,0)):
@@ -72,20 +74,36 @@ def minus(loc=0,color=(0,0,0)):
   print('score_timer'+os.sep+'%i-.png'%(loc))
   img.save('score_timer'+os.sep+'%i-.png'%(loc))
 
+def plus(loc=0,color=(0,0,0)):
+  # this funciton will generate a number. The resulting
+  # file will be named with the location first, and its
+  # value last
+  img=Image.new('RGBA',size,color='white')
+  img.putalpha(0)
+  draw=ImageDraw.Draw(img)
+  font=ImageFont.truetype("cour.ttf", 32)
+  y=-6
+  dx=18
+  draw.text((1+ loc*dx,y),'+',color,font)
+  print('score_timer'+os.sep+'%i+.png'%(loc))
+  img.save('score_timer'+os.sep+'%i+.png'%(loc))
+
 base()
 empty()
 # one could have done the range within the number
 # function and called it numbers ...
 # blue score - 3 digits
+plus(0,(64,192,255))
 minus(0,(64,192,255))
-for i in range(10): number(0,i,(64,192,255))
 for i in range(10): number(1,i,(64,192,255))
 for i in range(10): number(2,i,(64,192,255))
+for i in range(10): number(3,i,(64,192,255))
 # red score - 3 digits
-minus(4,(255,0,0))
-for i in range(10): number(4,i,(255,0,0))
-for i in range(10): number(5,i,(255,0,0))
+plus(5,(255,0,0))
+minus(5,(255,0,0))
 for i in range(10): number(6,i,(255,0,0))
+for i in range(10): number(7,i,(255,0,0))
+for i in range(10): number(8,i,(255,0,0))
 # minutes (3 digits) and seconds
-for j in [8,9,10,12,13]:
+for j in [10,11,12,14,15]:
     for i in range(10): number(j,i,(0,255,0))
